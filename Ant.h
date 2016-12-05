@@ -1,12 +1,14 @@
 #ifndef DEF_ANT
 #define DEF_ANT
 
+#include <cstdlib>
 #include <iostream>
+#include <ctime>
 #include <string>
 #include <vector>
 #include "Path.h"
 #include "Cell.h"
-
+#include "World.h"
 
 class Ant
 {
@@ -16,7 +18,14 @@ class Ant
   Cell nextCell_;
 
 public:
-  Ant();
+  Ant();// standard constructor
+  ~Ant();
+  Ant(int num, Cell firstCell);//complete constructor
+
+
+  void evolve();
+  void chooseNext(World world);
+  void deposit(double depot);
 };
 
 #endif
