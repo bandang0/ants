@@ -28,7 +28,8 @@ void Ant::evolve() //go to next cell and update path etc.
   curPath_.add(curCell_);
 }
 
-void Ant::chooseNext(World world) //choose next cell according to pheromone content
+void Ant::chooseNext(World world) //choose next cell
+//according to pheromone content
 {
   vector<Cell> possibleCells; //contains all goable cells
   for (int k = -1; k != 2; k++)
