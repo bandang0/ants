@@ -23,6 +23,7 @@ public:
   double getPhero();
   void addPhero(double morePhero);
   void subPhero(double minusPhero);
+  void print();
 };
 
 #endif

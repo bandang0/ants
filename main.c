@@ -10,7 +10,6 @@ using namespace std;
 
 int main()
 {
-  Ant Z, Azteca, Weaver;
 
   return 0;
 }

@@ -13,7 +13,7 @@ Ant::Ant(int num, Cell firstCell)
   number_ = num;
   curCell_ = firstCell;
   nextCell_ = firstCell;
-  curPath_ = Path();
+  curPath_ = Path(firstCell);
 
   cout << "New Ant: number " << number_ << " at (" << curCell_.getX()
         << "," << curCell_.getY() << ") with empty path." << endl;

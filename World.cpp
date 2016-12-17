@@ -27,7 +27,7 @@ Cell World::getCell(int i, int j)
   return cellTab_[i][j];
 }
 
-void updatePhero(double loss)
+void World::updatePhero(double loss)
 {
   for (int i = 0; i < sizeX_; i++)
   {

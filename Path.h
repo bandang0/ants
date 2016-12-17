@@ -14,9 +14,11 @@ class Path
   std::vector<Cell> list_;
 
 public:
-  Path();
+  Path(); //standard constructor
+  Path(Cell firstCell); //constructor by firstCell
   ~Path();
 
+  void print();
   void add(Cell newCell);
 };
 
