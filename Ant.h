@@ -6,26 +6,22 @@
 #include <ctime>
 #include <string>
 #include <vector>
-#include "Path.h"
-#include "Cell.h"
-#include "World.h"
+
 
 class Ant
 {
-  int number_;
-  Path curPath_;
-  Cell curCell_;
-  Cell nextCell_;
+  int _x;
+  int _y;
+  std::vector<int> _pathX;
+  std::vector<int> _pathY;
+  int _pathLength;
 
 public:
-  Ant();// standard constructor
-  ~Ant();
-  Ant(int num, Cell firstCell);//complete constructor
+  ~Ant();//destructor
+  Ant(int x, int y);//complete constructor
 
-
-  void evolve();
-  void chooseNext(World world);
-  void deposit(double depot);
+  void print();//print info on ant
+  void move();
 };
 
 #endif

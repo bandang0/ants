@@ -3,55 +3,25 @@
 using namespace std;
 
 // Standard constructor
-Ant::Ant() : number_(1), curPath_(Path()), curCell_(Cell()),
-nextCell_(Cell()) {}
-Ant::~Ant() {}
-
-//complete constructor
-Ant::Ant(int num, Cell firstCell)
-{
-  number_ = num;
-  curCell_ = firstCell;
-  nextCell_ = firstCell;
-  curPath_ = Path(firstCell);
-
-  cout << "New Ant: number " << number_ << " at (" << curCell_.getX()
-        << "," << curCell_.getY() << ") with empty path." << endl;
-
+Ant::~Ant() {
+  cout << "Destroyed ant\n";
 }
 
-
-void Ant::evolve() //go to next cell and update path etc.
-{
-  curCell_ = nextCell_;
-  nextCell_ = curCell_;
-  curPath_.add(curCell_);
+Ant::Ant(int x, int y) : _x(x), _y(y), _pathLength(1) {
+  _pathX.push_back(x);
+  _pathY.push_back(y);
+  cout << "Constucted ant at ("<<x<<","<<y<<")\n";
 }
 
-void Ant::chooseNext(World world) //choose next cell
-//according to pheromone content
-{
-  vector<Cell> possibleCells; //contains all goable cells
-  for (int k = -1; k < 2; k++)
-  {
-    for (int l = -1; l < 2; l++ )
-    {
-      if (l != k && world.getCell(k,l).getGo() == 0)
-      {
-        possibleCells.push_back(world.getCell(k,l));
-      }
-    }
+void Ant::print() {
+  cout << "Ant is at ("<<_x<<","<<_y<<"). It's current path has length "<<
+  _pathLength  << " and is : \n";
+
+  for (int i = 0; i< _pathLength; i++) {
+    cout <<"\t(" << _pathX[i]<<","<<_pathY[i]<<")\n";
   }
-
-  //choose a random index in possibleCells and assign next cell to the one you
-  // get.
-
-  int rd = rand();
-  rd  = rd % possibleCells.size();
-  nextCell_ = possibleCells[rd];
 }
 
-void Ant::deposit(double depot)
-{
-  curCell_.addPhero(depot);
+void Ant::move() {
+
 }

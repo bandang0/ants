@@ -2,38 +2,55 @@
 
 using namespace std;
 
-// Standard constructor
-World::World() : sizeX_(1), sizeY_(1) {}
-World::~World() {}
-
-//constructor with file
-World::World(string mapName)
-{
-
+World::~World () {
+  cout << "Destroyed world";
 }
 
-Cell World::getBegin()
-{
-  return begin_;
-}
+World::World(int sizeX, int sizeY, bool *isnp, int startX,
+  int startY,  int endX, int endY) { //complete constructor
 
-Cell World::getEnd()
-{
-  return end_;
-}
-
-Cell World::getCell(int i, int j)
-{
-  return cellTab_[i][j];
-}
-
-void World::updatePhero(double loss)
-{
-  for (int i = 0; i < sizeX_; i++)
-  {
-    for (int j = 0; j < sizeY_; j++ )
-    {
-      cellTab_[i][j].subPhero(loss);
+    _sizeX = sizeX;
+    _sizeY = sizeY;
+    for (int i = 0, i< sizeX, i++) {
+      for (int j = 0,  i<sizeY, j++){
+        _phero[i][j] = 0;
+        _isnp[i][j] = *isnp[i][j];
+      }
     }
+    _startX = startX;
+    _startY = startY;
+    _endX = endX;
+    _endY = endY;
+
+    cout << "Constructed world with size" << sizeX << "," << sizeY << ")\n";
+}
+
+
+World::World(string mapName)//constructor with file
+{
+
+}
+
+void World::print() {
+
+  cout << "Walls : \n"
+  for (int i=0; i <_sizeX; i++){
+    for (int j=0; i <_sizeY; j++){
+      cout << _isnp[i][j] ;
+    }
+
+    cout <<"\n";
   }
+
+  cout << "Pheromones : \n";
+
+  for (int i=0; i <_sizeX; i++){
+    for (int j=0;  i <_sizeY; j++){
+      cout << _phero[i][j] ;
+    }
+
+    cout <<"\n";
+  }
+
+
 }

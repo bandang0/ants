@@ -1,8 +1,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Cell.h"
-#include "Path.h"
 #include "Ant.h"
 #include "World.h"
 
@@ -11,32 +9,17 @@ using namespace std;
 int main()
 {
 
-  // try cells declaration
-  Cell Here;
-  Cell There(2,3,1, 0.0);
-  cout << "1." << endl;
+  Ant ant1(0,0);
+  Ant ant2(2,5);
 
-  //try ant declaration
-  Ant Z(1, Here);
-  Ant Azteca(2, There);
-  cout << "2." << endl;
+  ant1.print();
+  ant2.print();
 
-  //try path declaration
-  Path Path1;
-  Path Path2(There);
-  cout << "3." << endl;
+  bool isnp[3][4] = { {false, false, false, false},
+                      {false, true, true, false},
+                      {false, true, true, false}};
 
-  Path1.print();
-  Path2.print();
-  cout << "4." << endl;
+  World garden(3, 4, isnp, 2, 1,  2, 2);
 
-  Path2.add(There);
-
-  Here.print();
-  There.print();
-
-  cout << "5." << endl;
-  Path1.print();
-  Path2.print();
-  return 0;
+  garden.print();
 }

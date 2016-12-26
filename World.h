@@ -7,26 +7,24 @@
 #include <ctime>
 #include <string>
 #include <vector>
-#include "Cell.h"
 
 class World
 {
-  int sizeX_;
-  int sizeY_;
-  std::string fileName_;
-  Cell begin_;
-  Cell end_;
-  std::vector< std::vector<Cell> > cellTab_;
+  const int _sizeX;
+  const int _sizeY;
+  std::vector<std::vector<int>> _phero;
+  std::vector<std::vector<bool>> _isnp;
+  const int _startX;
+  const int _startY;
+  const int _endX;
+  const int _endY;
 
 public:
-  World(); // standard constructor
-  ~World();
+  ~World();//destructor
+  World(int sizeX, int sizeY, bool *isnp, int startX, int startY,
+    int endX, int endY);//constructor with complete info
   World(std::string mapName); // construcotr that reads read info in a map file
-
-  Cell getBegin();
-  Cell getEnd();
-  Cell getCell(int i, int j);
-  void updatePhero(double loss);
+  void print();
 };
 
 #endif
