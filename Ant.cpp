@@ -32,9 +32,9 @@ void Ant::chooseNext(World world) //choose next cell
 //according to pheromone content
 {
   vector<Cell> possibleCells; //contains all goable cells
-  for (int k = -1; k != 2; k++)
+  for (int k = -1; k < 2; k++)
   {
-    for (int l = -1; l != 2; l++ )
+    for (int l = -1; l < 2; l++ )
     {
       if (l != k && world.getCell(k,l).getGo() == 0)
       {
