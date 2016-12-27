@@ -140,7 +140,7 @@ def move_call (x,y): # Function that loops untill ant is done each path
     current_length = []
 
 
-while  path_accumulator < 5 : # Function that loops untill the final path is found
+while  path_accumulator < 1 : # Function that loops untill the final path is found
     move_call (ant_x,ant_y)
     
 for i in range (len(path)):
