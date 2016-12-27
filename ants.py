@@ -35,8 +35,8 @@ def check_list (l,a,b) :
 
 def  move (x,y) :
     
-    #global current
-    #global passed
+    global current
+    global passed
     global ant_x
     global ant_y
     global current_length
@@ -104,7 +104,9 @@ def  move (x,y) :
     if not bool_map[h_x][h_y] and not check_list(passed,h_x,h_y):
         for i in range (h_ph):
             l.append((h_x,h_y))
-    if l != [] :
+    
+    if l != [] : # Only execute if l is not empty
+
         rd = random.randint(0,len(l)-1)
 
         (swap_x,swap_y) = l[rd] # Necessary swap tupple for Python to see the new position as two variables that can be independantely accessed
@@ -119,13 +121,26 @@ def  move (x,y) :
         passed.append((ant_x,ant_y))
     
 def move_call (x,y): # Function that loops untill ant is done each path
+    global current
+    global current_length
+    global path
+    global path_length
+    global path_accumulator
+
     while ant_x != end_x or ant_y != end_y:
         move (ant_x,ant_y)
+    if current_length < path_length :
+        path = current
+        path_length = current_length
+        path_accumulator = 1
+    elif current_length == path_length:
+        path__accumulator += 1
     passed = []
-    
+    current = []
+    current_length = []
 
 
-while  path_accumulator < 1 : # Function that loops untill the final path is found
+while  path_accumulator < 5 : # Function that loops untill the final path is found
     move_call (ant_x,ant_y)
     
 for i in range (len(path)):
