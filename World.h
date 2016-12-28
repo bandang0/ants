@@ -22,6 +22,8 @@ class World
   int _endX;
   int _endY;
   int _loss; //loss by wind blow
+  std::vector<std::vector<int>> _listPathX;//list of paths, x coord
+  std::vector<std::vector<int>> _listPathY;//list of paths, y coord
 
 public:
   //destructor, constructor
@@ -34,7 +36,8 @@ public:
   //print, equals
   void print(); //print pheromone state
   void print(Ant & ); //print ants on grid
-
+  void printPaths();
+  void printPaths(int);
   //getset
   int getSizeX();
   int getSizeY();
@@ -49,6 +52,11 @@ public:
   //methods
   int getPos(int, int);//get linear position in [0, sx*sy-1] with x,y coords
   void windBlow();//uniformely lose pheromone
+  bool isCorrect();//verify that calculations and solutions are possible
+  void addPath(Ant &);
+  void sorry();
+  bool hasInARow(int);
+
 };
 
 #endif

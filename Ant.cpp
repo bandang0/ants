@@ -14,17 +14,33 @@ Ant::Ant(int x, int y, int depot) : _x(x), _y(y), _pathLength(1),
   cout << "Constucted ant at ("<<x<<","<<y<<") with depot " << _depot << "\n";
 }
 
+Ant::Ant(World & world , int depot) ://constructor at world start position
+  _pathLength(1),
+  _depot(depot) {
+    _x = world.getStartX();
+    _y = world.getStartY();
+    _pathX.push_back(_x);//initialize path at start cell
+    _pathY.push_back(_y);
+    cout << "Constucted ant at ("<<_x<<","<<_y<<") with depot "
+          << _depot << "\n";
+
+  }
+
+
 void Ant::print() {
   cout << "Ant is at ("<<_x<<","<<_y<<"). It's current path has length "<<
-  _pathLength  << " and is : \n";
+  _pathLength  << " and is : \n\t";
 
   for (int i = 0; i< _pathLength; i++) {//list cells in path
-    cout <<"\t(" << _pathX[i]<<","<<_pathY[i]<<")\n";
+    cout <<"(" << _pathX[i]<<","<<_pathY[i]<<") ";
   }
+  cout <<"\n";
 }
 
 int Ant::getX() {return _x;}
 int Ant::getY() {return _y;}
+vector<int> Ant::getPathX() {return _pathX;}
+vector<int> Ant::getPathY() {return _pathY;}
 
 int Ant::chooseLab (World & world) {
 
@@ -97,11 +113,10 @@ int Ant::chooseLab (World & world) {
 
 void Ant::move(World & world) {
 
-  int pos = world.getPos(_x, _y); //current position
-  int newX, newY; //next position
+  int pos; //next position
+  int newX, newY; //next position in x, y coords
 
-  //deposit phero
-  world.setPhero(pos, world.getPhero(pos) + _depot);
+
 
   //choose label
   int lab = chooseLab(world);
@@ -149,6 +164,10 @@ void Ant::move(World & world) {
       break;
   }
 
+  pos = world.getPos(newX, newY);
+  
+  //deposit phero at next cell
+  world.setPhero(pos, world.getPhero(pos) + _depot);
   // go to next cell
   _x = newX;
   _y = newY;
@@ -157,4 +176,9 @@ void Ant::move(World & world) {
   _pathX.push_back(newX);
   _pathY.push_back(newY);
   _pathLength = _pathLength + 1;
+}
+
+
+bool Ant::isAtEnd(World & world){
+  return (_x == world.getEndX() && _y == world.getEndY());
 }

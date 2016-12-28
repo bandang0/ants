@@ -7,38 +7,46 @@
 
 using namespace std;
 
-int main()
-{
+int main(){
+  int acc = 30;
+  int stop = 1;
+  int isnp[25] = {  1, 1, 1, 1, 1,
+                    1, 0, 0, 0, 1,
+                    1, 0, 0, 0, 1,
+                    1, 0, 0, 0, 1,
+                    1, 1, 1, 1, 1};
 
-  int isnp[100] = {  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-                    1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+  World world(5, 5, isnp, 2, 2, 4, 4, 0);
 
+  if (!world.isCorrect()){
+     world.sorry();
+     return 1;
+   }
 
-  World world1(10, 10, isnp, 2, 2, 3, 4, 1);
+   cout << "Starting calculations.\n";
 
-  world1.print();
+   while(!world.hasInARow(10)){
+     cout << "New ant\n";
+     Ant ant(world, 0);
 
-  Ant ant1(2,2, 4);
-  Ant ant2(5,6, 4);
+     while(!ant.isAtEnd(world)){
+       ant.move(world);
+       world.windBlow();
+       world.print();
+    }
+    ant.print();
+    world.print();
+    world.addPath(ant);
+    stop = stop +1;
+   }
 
+  cout << "Done calculations.\n";
 
-  for (int k = 0; k < 50; k++){
+  cout << "Here are the results: \n";
 
-    ant1.move(world1);
-    world1.windBlow();
-    usleep(1000000);
-    world1.print();
-    world1.print(ant1);
+  world.printPaths(3);
 
-  }
-
+  cout <<"Exiting\n";
+  return 0;
 
 }

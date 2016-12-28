@@ -23,6 +23,7 @@ public:
   //destructor constructor
   ~Ant();
   Ant(int x, int y, int depot);//complete constructor
+  Ant(World & , int);//constructor at world's start position and depot
 
   //print, equal
   void print();//print info on ant
@@ -30,10 +31,13 @@ public:
   //getset
   int getX();
   int getY();
+  std::vector<int> getPathX();
+  std::vector<int> getPathY();
 
   //methods
   int chooseLab(World &);//randomly choose label of next cell
   void move(World &);//go to next step, update path and world phero
+  bool isAtEnd(World &); //tells if ant is at end position of world
 
 };
 
