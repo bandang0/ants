@@ -2,14 +2,14 @@
 
 using namespace std;
 
-// Standard constructor
+//destructor
 Ant::~Ant() {
   cout << "Destroyed ant\n";
 }
 
 Ant::Ant(int x, int y, int depot) : _x(x), _y(y), _pathLength(1),
                                     _depot(depot) {
-  _pathX.push_back(x);
+  _pathX.push_back(x);//initialize path at start cell
   _pathY.push_back(y);
   cout << "Constucted ant at ("<<x<<","<<y<<") with depot " << _depot << "\n";
 }
@@ -18,7 +18,7 @@ void Ant::print() {
   cout << "Ant is at ("<<_x<<","<<_y<<"). It's current path has length "<<
   _pathLength  << " and is : \n";
 
-  for (int i = 0; i< _pathLength; i++) {
+  for (int i = 0; i< _pathLength; i++) {//list cells in path
     cout <<"\t(" << _pathX[i]<<","<<_pathY[i]<<")\n";
   }
 }
@@ -84,10 +84,11 @@ int Ant::chooseLab (World & world) {
     }
   }
 
-  rd = rand() % possibleCells.size();
+  rd = rand() % possibleCells.size();//random number
+                                     //in [0, num of possible cells]
 
   lab = possibleCells[rd]; //random label, those most represented are more
-                         //likely to be chosen
+                           //likely to be chosen
 
   return lab;
 

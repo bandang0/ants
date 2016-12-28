@@ -15,8 +15,8 @@ class World
 {
   int _sizeX;
   int _sizeY;
-  std::vector<int> _phero;
-  std::vector<int> _isnp;
+  std::vector<int> _phero;//phero content of cells
+  std::vector<int> _isnp;//list of obstacles
   int _startX;
   int _startY;
   int _endX;
@@ -47,8 +47,8 @@ public:
   void setPhero(int, int);
 
   //methods
-  int getPos(int, int);
-  void windBlow();
+  int getPos(int, int);//get linear position in [0, sx*sy-1] with x,y coords
+  void windBlow();//uniformely lose pheromone
 };
 
 #endif

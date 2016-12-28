@@ -8,7 +8,7 @@
 #include <vector>
 #include "World.h"
 
-class World ;
+class World ; //this is just because World.h and Ant.h include themselves
 
 class Ant
 {
@@ -17,11 +17,11 @@ class Ant
   std::vector<int> _pathX;
   std::vector<int> _pathY;
   int _pathLength;
-  int _depot;//how mush phero is deposited at each step
+  int _depot;//how mush phero is deposited at each move
 
 public:
   //destructor constructor
-  ~Ant();//destructor
+  ~Ant();
   Ant(int x, int y, int depot);//complete constructor
 
   //print, equal
@@ -32,8 +32,8 @@ public:
   int getY();
 
   //methods
-  int chooseLab(World &);
-  void move(World &);
+  int chooseLab(World &);//randomly choose label of next cell
+  void move(World &);//go to next step, update path and world phero
 
 };
 

@@ -12,7 +12,7 @@ World::World(int sizeX, int sizeY, int isnp[], int startX,
     _sizeX = sizeX;
     _sizeY = sizeY;
     for (int i = 0; i < sizeX*sizeY; i++) {
-        _phero.push_back(0); //initialize pheromone at 1
+        _phero.push_back(0); //initialize pheromone at 0
         _isnp.push_back(isnp[i]);//copy isnp in the class member
     }
     _startX = startX;
@@ -31,7 +31,7 @@ World::World(string mapName)//constructor with file
 
 void World::print() {
 
-  cout << "Current pheromone state : \n";
+  cout << "Current pheromone state : \n";//print grid of pheromone content
   for (int i = 0; i < _sizeY; i++){
     for (int j = 0; j < _sizeX; j++){
       if (_isnp[_sizeX*i + j] == 1){
@@ -45,7 +45,7 @@ void World::print() {
   }
 }
 
-void World::print(Ant & ant){
+void World::print(Ant & ant){//print ant on grid
   int aX = ant.getX();
   int aY = ant.getY();
 
