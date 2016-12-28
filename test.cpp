@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unistd.h>
 #include "Ant.h"
 #include "World.h"
 
@@ -9,17 +10,35 @@ using namespace std;
 int main()
 {
 
-  Ant ant1(0,0);
-  Ant ant2(2,5);
+  int isnp[100] = {  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 
-  ant1.print();
-  ant2.print();
 
-  bool isnp[3][4] = { {false, false, false, false},
-                      {false, true, true, false},
-                      {false, true, true, false}};
+  World world1(10, 10, isnp, 2, 2, 3, 4, 1);
 
-  World garden(3, 4, isnp, 2, 1,  2, 2);
+  world1.print();
 
-  garden.print();
+  Ant ant1(2,2, 4);
+  Ant ant2(5,6, 4);
+
+
+  for (int k = 0; k < 50; k++){
+
+    ant1.move(world1);
+    world1.windBlow();
+    usleep(1000000);
+    world1.print();
+    world1.print(ant1);
+
+  }
+
+
 }

@@ -7,24 +7,48 @@
 #include <ctime>
 #include <string>
 #include <vector>
+#include "Ant.h"
+
+class Ant;
 
 class World
 {
-  const int _sizeX;
-  const int _sizeY;
-  std::vector<std::vector<int>> _phero;
-  std::vector<std::vector<bool>> _isnp;
-  const int _startX;
-  const int _startY;
-  const int _endX;
-  const int _endY;
+  int _sizeX;
+  int _sizeY;
+  std::vector<int> _phero;
+  std::vector<int> _isnp;
+  int _startX;
+  int _startY;
+  int _endX;
+  int _endY;
+  int _loss; //loss by wind blow
 
 public:
+  //destructor, constructor
   ~World();//destructor
-  World(int sizeX, int sizeY, bool *isnp, int startX, int startY,
-    int endX, int endY);//constructor with complete info
-  World(std::string mapName); // construcotr that reads read info in a map file
-  void print();
+  World(int sizeX, int sizeY, int isnp[], int startX,
+        int startY, int endX, int endY, int loss);//constructor
+                                                  //with complete info
+  World(std::string mapName) ; //constructor that reads read info in a map file
+
+  //print, equals
+  void print(); //print pheromone state
+  void print(Ant & ); //print ants on grid
+
+  //getset
+  int getSizeX();
+  int getSizeY();
+  int getPhero(int);
+  int getIsnp(int);
+  int getStartX();
+  int getStartY();
+  int getEndX();
+  int getEndY();
+  void setPhero(int, int);
+
+  //methods
+  int getPos(int, int);
+  void windBlow();
 };
 
 #endif
