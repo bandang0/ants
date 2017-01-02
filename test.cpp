@@ -8,15 +8,22 @@
 using namespace std;
 
 int main(){
-  int acc = 30;
+  double r= 1.0e-4;
+  double c = 1.0e-3;
+  int acc = 1;
   int stop = 1;
-  int isnp[25] = {  1, 1, 1, 1, 1,
-                    1, 0, 0, 0, 1,
-                    1, 0, 0, 0, 1,
-                    1, 0, 0, 0, 1,
-                    1, 1, 1, 1, 1};
+  int isnp[81] = {  1, 1, 1, 1, 1, 1, 1, 1, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 0, 0, 0, 0, 0, 0, 0, 1,
+                    1, 1, 1, 1, 1, 1, 1, 1, 1};
+                    //1, 0, 0, 0, 0, 0, 0, 0, 1,
 
-  World world(5, 5, isnp, 2, 2, 4, 4, 0);
+  World world(9, 9, isnp, 2, 2, 7, 7, r);
 
   if (!world.isCorrect()){
      world.sorry();
@@ -25,17 +32,19 @@ int main(){
 
    cout << "Starting calculations.\n";
 
-   while(!world.hasInARow(10)){
+   while(/*!world.hasInARow(10)*/ stop <= 100){
      cout << "New ant\n";
-     Ant ant(world, 0);
+     Ant ant(world, c);
 
-     while(!ant.isAtEnd(world)){
+     while(!ant.isAtEnd(world) && acc < 300){
        ant.move(world);
        world.windBlow();
-       world.print();
+       //world.print();
+       acc = acc +1;
     }
-    ant.print();
-    world.print();
+    acc=1;
+    //ant.print();
+    //world.print();
     world.addPath(ant);
     stop = stop +1;
    }
@@ -44,8 +53,8 @@ int main(){
 
   cout << "Here are the results: \n";
 
-  world.printPaths(3);
-
+  world.printPaths(100);
+  world.print();
   cout <<"Exiting\n";
   return 0;
 

@@ -7,14 +7,14 @@ Ant::~Ant() {
   cout << "Destroyed ant\n";
 }
 
-Ant::Ant(int x, int y, int depot) : _x(x), _y(y), _pathLength(1),
+Ant::Ant(int x, int y, double depot) : _x(x), _y(y), _pathLength(1),
                                     _depot(depot) {
   _pathX.push_back(x);//initialize path at start cell
   _pathY.push_back(y);
   cout << "Constucted ant at ("<<x<<","<<y<<") with depot " << _depot << "\n";
 }
 
-Ant::Ant(World & world , int depot) ://constructor at world start position
+Ant::Ant(World & world , double depot) ://constructor at world start position
   _pathLength(1),
   _depot(depot) {
     _x = world.getStartX();
@@ -46,68 +46,60 @@ int Ant::chooseLab (World & world) {
 
   //we will choose a random label from 0 to 7 which label the sourounding
   //cells
-  int rd;
   int lab;
-  vector<int> possibleCells={}; //vector of labels of possible cells to go
+  int rd;
+  double sum = 0.0;
+  double xrd;
+  vector<int> pos = { world.getPos(_x,_y-1), //vector of positions
+                      world.getPos(_x-1, _y-1), //of sourrounding cells
+                      world.getPos(_x-1, _y),
+                      world.getPos(_x-1, _y+1),
+                      world.getPos(_x, _y+1),
+                      world.getPos(_x+1, _y+1),
+                      world.getPos(_x+1, _y),
+                      world.getPos(_x+1, _y-1)};
 
-  // fill in the vector with as many labels n as there are pheromones in cell
-  // n around the current cell
-  if (world.getIsnp(world.getPos(_x,_y-1)) == 0){
-    for (int k = 0 ; k <= world.getPhero(world.getPos(_x,_y-1)); k++){
-      possibleCells.push_back(0);
-    }
+  vector<double> accPhero = {0.0};
+
+
+  for (int m = 0; m<= 7; m++){
+    double toAdd = (1.0 - (double) world.getIsnp(pos[m])) *
+              world.getPhero(pos[m]);
+    sum = sum + toAdd;
+    accPhero.push_back(accPhero[m] + toAdd);
   }
 
-  if (world.getIsnp(world.getPos(_x-1,_y-1)) == 0){
-    for (int k = 0 ; k <= world.getPhero(world.getPos(_x-1,_y-1)); k++){
-      possibleCells.push_back(1);
-    }
+  if (sum == 0.0){return rand() % 7;} //if thereis no phero around
+
+  rd = rand() % 32000;
+  xrd = ((double) rd) / 32000.0; //random number in [0, 1[
+
+  if ( accPhero[0] <= xrd && xrd < accPhero[1]/sum ){
+    lab = 0;
   }
-
-  if (world.getIsnp(world.getPos(_x-1,_y)) == 0){
-    for (int k = 0 ; k <= world.getPhero(world.getPos(_x-1,_y)); k++){
-      possibleCells.push_back(2);
-    }
+  else if (accPhero[1]/sum <= xrd && xrd < accPhero[2]/sum){
+    lab = 1;
   }
-
-  if (world.getIsnp(world.getPos(_x-1,_y+1)) == 0){
-    for (int k = 0 ; k <= world.getPhero(world.getPos(_x-1,_y+1)); k++){
-      possibleCells.push_back(3);
-    }
+  else if (accPhero[2]/sum <= xrd && xrd < accPhero[3]/sum){
+    lab = 2;
   }
-
-  if (world.getIsnp(world.getPos(_x,_y+1)) == 0){
-    for (int k = 0 ; k <= world.getPhero(world.getPos(_x,_y+1)); k++){
-      possibleCells.push_back(4);
-    }
+  else if (accPhero[3]/sum <= xrd && xrd < accPhero[4]/sum){
+    lab = 3;
   }
-
-  if (world.getIsnp(world.getPos(_x+1,_y+1)) == 0){
-    for (int k = 0 ; k <= world.getPhero(world.getPos(_x+1,_y+1)); k++){
-      possibleCells.push_back(5);
-    }
+  else if (accPhero[4]/sum <= xrd && xrd < accPhero[5]/sum){
+    lab = 4;
   }
-
-  if (world.getIsnp(world.getPos(_x+1,_y)) == 0){
-    for (int k = 0 ; k <= world.getPhero(world.getPos(_x+1,_y+1)); k++){
-      possibleCells.push_back(6);
-    }
+  else if (accPhero[5]/sum <= xrd && xrd < accPhero[6]/sum){
+    lab = 5;
   }
-
-  if (world.getIsnp(world.getPos(_x+1,_y-1)) == 0){
-    for (int k = 0 ; k <= world.getPhero(world.getPos(_x+1,_y-1)); k++){
-      possibleCells.push_back(7);
-    }
+  else if (accPhero[6]/sum <= xrd && xrd < accPhero[7]/sum){
+    lab = 6;
   }
-
-  rd = rand() % possibleCells.size();//random number
-                                     //in [0, num of possible cells]
-
-  lab = possibleCells[rd]; //random label, those most represented are more
-                           //likely to be chosen
+  else if (accPhero[7]/sum <= xrd && xrd < accPhero[8]/sum){
+    lab = 7;
+  }
 
   return lab;
-
 }
 
 
@@ -165,7 +157,7 @@ void Ant::move(World & world) {
   }
 
   pos = world.getPos(newX, newY);
-  
+
   //deposit phero at next cell
   world.setPhero(pos, world.getPhero(pos) + _depot);
   // go to next cell

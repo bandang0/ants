@@ -6,6 +6,7 @@
 #include <ctime>
 #include <string>
 #include <vector>
+#include <cmath>
 #include "World.h"
 
 class World ; //this is just because World.h and Ant.h include themselves
@@ -17,13 +18,13 @@ class Ant
   std::vector<int> _pathX;
   std::vector<int> _pathY;
   int _pathLength;
-  int _depot;//how mush phero is deposited at each move
+  double _depot;//how mush phero is deposited at each move
 
 public:
   //destructor constructor
   ~Ant();
-  Ant(int x, int y, int depot);//complete constructor
-  Ant(World & , int);//constructor at world's start position and depot
+  Ant(int x, int y, double depot);//complete constructor
+  Ant(World & , double);//constructor at world's start position and depot
 
   //print, equal
   void print();//print info on ant

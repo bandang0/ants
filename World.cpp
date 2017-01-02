@@ -7,23 +7,24 @@ World::~World () {
 }
 
 World::World(int sizeX, int sizeY, int isnp[], int startX,
-  int startY,  int endX, int endY, int loss) { //complete constructor
+  int startY,  int endX, int endY, double rho) { //complete constructor
 
     _sizeX = sizeX;
     _sizeY = sizeY;
     for (int i = 0; i < sizeX*sizeY; i++) {
-        _phero.push_back(0); //initialize pheromone at 0
+        _phero.push_back(1.0); //initialize pheromone at 1.0
         _isnp.push_back(isnp[i]);//copy isnp in the class member
     }
     _startX = startX;
     _startY = startY;
     _endX = endX;
     _endY = endY;
-    _loss  = loss;
+    _rho  = rho;
     _listPathX = { };
     _listPathY = { };
 
-    cout << "Constructed world with size (" << sizeX << "," << sizeY << ")\n";
+    cout << "Constructed world with size (" << sizeX << "," << sizeY << ") "
+          << "and rho coefficient " << _rho << "\n";
 }
 
 
@@ -92,7 +93,7 @@ void World::printPaths(int p){
 
   cout  << "The world's last " << p << " non-empty stored paths are : \n";
 
-  for (int m = 1; m <= min; m++){
+  for (int m = min; m >= 1; m--){
     cout << "\t" << m << ": ";
     for (int n = 0; n < _listPathX[listNum-m].size(); n++){
       cout << "(" << _listPathX[listNum - m][n] << ","
@@ -105,14 +106,14 @@ void World::printPaths(int p){
 
 int World::getSizeX() {return _sizeX;}
 int World::getSizeY(){return _sizeY;}
-int World::getPhero(int pos) {return _phero[pos];}
+double World::getPhero(int pos) {return _phero[pos];}
 int World::getIsnp(int pos) {return _isnp[pos];}
 int World::getStartX() {return _startX;}
 int World::getStartY() {return _startY;}
 int World::getEndX() {return _endX;}
 int World::getEndY() {return _endY;}
 
-void World::setPhero(int pos, int phero){
+void World::setPhero(int pos, double phero){
   _phero[pos] = phero;
 }
 
@@ -123,14 +124,10 @@ int World::getPos(int x, int y) {
   return _sizeX*(y-1) + (x-1);
 
 }
+
 void World::windBlow() {
   for (int j = 0; j < _sizeX*_sizeY; j++){
-    if (_phero[j] - _loss < 0) {
-      _phero[j] = 0;
-    }
-    else{
-    _phero[j] = _phero[j] - _loss;
-    }
+    _phero[j] = (1 - _rho) * _phero[j];
   }
 }
 
@@ -187,6 +184,8 @@ void World::sorry() {
        << "randomly walk out of the world!),\n";
   cout << " 4. There is no path between the start and end positions (good "
        << "luck with finding one!).\n";
+
+  cout << "Please try another .map file.\n";
 }
 
 bool World::hasInARow(int n){

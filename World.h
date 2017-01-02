@@ -15,13 +15,13 @@ class World
 {
   int _sizeX;
   int _sizeY;
-  std::vector<int> _phero;//phero content of cells
+  std::vector<double> _phero;//phero content of cells
   std::vector<int> _isnp;//list of obstacles
   int _startX;
   int _startY;
   int _endX;
   int _endY;
-  int _loss; //loss by wind blow
+  double _rho; //when wind blows, pheromone is multiplied by (1 - _rho)
   std::vector<std::vector<int>> _listPathX;//list of paths, x coord
   std::vector<std::vector<int>> _listPathY;//list of paths, y coord
 
@@ -29,7 +29,7 @@ public:
   //destructor, constructor
   ~World();//destructor
   World(int sizeX, int sizeY, int isnp[], int startX,
-        int startY, int endX, int endY, int loss);//constructor
+        int startY, int endX, int endY, double rho);//constructor
                                                   //with complete info
   World(std::string mapName) ; //constructor that reads read info in a map file
 
@@ -41,17 +41,17 @@ public:
   //getset
   int getSizeX();
   int getSizeY();
-  int getPhero(int);
+  double getPhero(int);
   int getIsnp(int);
   int getStartX();
   int getStartY();
   int getEndX();
   int getEndY();
-  void setPhero(int, int);
+  void setPhero(int, double);
 
   //methods
   int getPos(int, int);//get linear position in [0, sx*sy-1] with x,y coords
-  void windBlow();//uniformely lose pheromone
+  void windBlow();//uniformly lose pheromone
   bool isCorrect();//verify that calculations and solutions are possible
   void addPath(Ant &);
   void sorry();
