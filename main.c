@@ -22,7 +22,7 @@ int main(){
   while(!world.hasInARow(10)){
 
     Ant ant(world, 3);
-    while(!ant.atEnd(world)){
+    while(!ant.isAtEnd(world)){
       ant.move(world);
       world.windBlow();
     }

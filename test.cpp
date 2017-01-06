@@ -8,8 +8,8 @@
 using namespace std;
 
 int main(){
-  double r= 1.0e-4;
-  double c = 1.0e-3;
+  double r= 1.0e-2;
+  double c = 1.0;
   int acc = 1;
   int stop = 1;
   int isnp[81] = {  1, 1, 1, 1, 1, 1, 1, 1, 1,

@@ -15,13 +15,13 @@ This work is released under the GNU GPL3 License so feel free (as in freedom).
 
 ## Installing
 
-All you need is the GNU C++ compiler (`g++`). Just run `g++ *.cpp -o ants.out` and you're done.
+All you need is the GNU C++ compiler (`g++`). Just run (with root priviledges) `make all`, then `make install` and `make clean` and  and you're done.
 
 ## Usage
 
 This program calculates the shortest path on a 2D grid which can contain obstacles. It runs with the following command:
 
-`ants.out "filename.map"`
+`ants "filename.map"`
 
 Here, `filename.map` is a text file which contains all the info needed by the program for the calculation. Basically, it works like this (see `garden.map` for an example):
 
