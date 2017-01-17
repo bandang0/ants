@@ -27,7 +27,7 @@ Ant::Ant(World & world , double depot) ://constructor at world start position
   }
 
 
-void Ant::print() {
+void Ant::print() const {
   cout << "Ant is at ("<<_x<<","<<_y<<"). It's current path has length "<<
   _pathLength  << " and is : \n\t";
 
@@ -37,12 +37,12 @@ void Ant::print() {
   cout <<"\n";
 }
 
-int Ant::getX() {return _x;}
-int Ant::getY() {return _y;}
-vector<int> Ant::getPathX() {return _pathX;}
-vector<int> Ant::getPathY() {return _pathY;}
+int Ant::getX() const {return _x;}
+int Ant::getY() const {return _y;}
+vector<int> Ant::getPathX() const {return _pathX;}
+vector<int> Ant::getPathY() const {return _pathY;}
 
-int Ant::chooseLab (World & world) {
+int Ant::chooseLab (World & world) const {
 
   //we will choose a random label from 0 to 7 which label the sourounding
   //cells
@@ -171,6 +171,6 @@ void Ant::move(World & world) {
 }
 
 
-bool Ant::isAtEnd(World & world){
+bool Ant::isAtEnd(World & world) const {
   return (_x == world.getEndX() && _y == world.getEndY());
 }

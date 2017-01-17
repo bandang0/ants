@@ -31,9 +31,14 @@ World::World(int sizeX, int sizeY, int isnp[], int startX,
 World::World(string mapName)//constructor with file
 {
 
+
+
+
+  _listPathX = {};
+  _listPathY = {};
 }
 
-void World::print() {
+void World::print() const {
 
   cout << "Current pheromone state : \n";//print grid of pheromone content
   for (int i = 0; i < _sizeY; i++){
@@ -49,7 +54,7 @@ void World::print() {
   }
 }
 
-void World::print(Ant & ant){//print ant on grid
+void World::print(Ant & ant) const {//print ant on grid
   int aX = ant.getX();
   int aY = ant.getY();
 
@@ -72,7 +77,7 @@ void World::print(Ant & ant){//print ant on grid
   }
 }
 
-void World::printPaths(){
+void World::printPaths() const {
   cout  << "World currently has " << _listPathX.size()
         << " paths stored. They are : \n";
 
@@ -85,7 +90,7 @@ void World::printPaths(){
   }
 }
 
-void World::printPaths(int p){
+void World::printPaths(int p) const {
 
   int min = p;
   int listNum = _listPathX.size();
@@ -104,20 +109,20 @@ void World::printPaths(int p){
 
 }
 
-int World::getSizeX() {return _sizeX;}
-int World::getSizeY(){return _sizeY;}
-double World::getPhero(int pos) {return _phero[pos];}
-int World::getIsnp(int pos) {return _isnp[pos];}
-int World::getStartX() {return _startX;}
-int World::getStartY() {return _startY;}
-int World::getEndX() {return _endX;}
-int World::getEndY() {return _endY;}
+int World::getSizeX() const {return _sizeX;}
+int World::getSizeY() const {return _sizeY;}
+double World::getPhero(int pos) const {return _phero[pos];}
+int World::getIsnp(int pos) const {return _isnp[pos];}
+int World::getStartX() const {return _startX;}
+int World::getStartY() const {return _startY;}
+int World::getEndX() const {return _endX;}
+int World::getEndY() const {return _endY;}
 
 void World::setPhero(int pos, double phero){
   _phero[pos] = phero;
 }
 
-int World::getPos(int x, int y) {
+int World::getPos(int x, int y) const {
   //this function gives the position between 0 and sx*sy-1 of an element
   // which has position (x,y) with 1<=x,y<=sx in the grid
 
@@ -131,38 +136,38 @@ void World::windBlow() {
   }
 }
 
-bool World::isCorrect() {
+bool World::isCorrect() const {
 
-//1. the start and end cells are not walls
-if (_isnp[getPos(_startX,_startY)] == 1 || _isnp[getPos(_endX,_endY)] == 1){
-  return false;
-}
+  //1. the start and end cells are not walls
+  if (_isnp[getPos(_startX,_startY)] == 1 || _isnp[getPos(_endX,_endY)] == 1){
+    return false;
+  }
 
-//2. the start and end cells are not the same
-if(_startX == _endX && _startY == _endY){
-  return false;
-}
+  //2. the start and end cells are not the same
+  if(_startX == _endX && _startY == _endY){
+    return false;
+  }
 
-//3. the whole world is enclosed in a wall
-int prod = 1; //this is the product of all _isnp around the wall
-              //it stays equal to 1 iff a wall encloses the world
+  //3. the whole world is enclosed in a wall
+  int prod = 1; //this is the product of all _isnp around the wall
+                //it stays equal to 1 iff a wall encloses the world
 
-for (int l = 1; l <= _sizeX ; l++){
-  prod = prod*_isnp[getPos(l,1)];
-  prod = prod*_isnp[getPos(l,_sizeY)];
-}
+  for (int l = 1; l <= _sizeX ; l++){
+    prod = prod*_isnp[getPos(l,1)];
+    prod = prod*_isnp[getPos(l,_sizeY)];
+  }
 
-for (int l= 2; l<=_sizeY -1 ; l++){
-  prod = prod*_isnp[getPos(1,l)];
-  prod = prod*_isnp[getPos(_sizeX,l)];
-}
+  for (int l= 2; l<=_sizeY -1 ; l++){
+    prod = prod*_isnp[getPos(1,l)];
+    prod = prod*_isnp[getPos(_sizeX,l)];
+  }
 
 
-if (prod == 0){return false;}
-//4. the start and end cells are connected
-/* To be implemented */
+  if (prod == 0){return false;}
+  //4. the start and end cells are connected
+  /* To be implemented */
 
-return true;
+  return true;
 
 }
 
@@ -173,22 +178,8 @@ void World::addPath(Ant & ant) {
 
 }
 
-void World::sorry() {
-  cout << "Sorry, looks like the world of which you want to find the shortest"
-       << " path has a problem. Either : \n";
 
-  cout << " 1. The start or end position are not accessible (inside walls),\n";
-  cout << " 2. The start and end positions are at the same place (not"
-       << " authorized),\n";
-  cout << " 3. The world is not entirely sourrounded by a wall (the ants can "
-       << "randomly walk out of the world!),\n";
-  cout << " 4. There is no path between the start and end positions (good "
-       << "luck with finding one!).\n";
-
-  cout << "Please try another .map file.\n";
-}
-
-bool World::hasInARow(int n){
+bool World::hasInARow(int n) const {
 
   bool rtn = true;
 

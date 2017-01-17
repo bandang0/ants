@@ -10,6 +10,7 @@
 
 #executables
 *.out
+ants
 
 #LaTeX
 *.aux

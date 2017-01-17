@@ -1,24 +1,26 @@
-#include <iostream>
-#include <string>
-#include <vector>
 #include "Ant.h"
 #include "World.h"
+#include "global.h"
+
 
 using namespace std;
 
 int main(){
-  cout << "Welcome to the Ant Colony Algorithm pathfinder\n";
-  cout << "Building world from file " << filename << "\n";
 
+  string filename; //name of the file (existent or not to read the map)
+  welcome();
+  filename = chooseFile();
+
+  cout << "Building world from" << filename <<"\n";
   World world(filename);
   cout << "Done\n";
 
   if (!world.isCorrect()){
-    world.sorry();
-    return 1;
+    sorry();
+    if (askExit() == 1){return 1;}
   }
 
-  cout << "Starting calculations.\n";
+  cout << "\tStarting calculations...\n";
   while(!world.hasInARow(10)){
 
     Ant ant(world, 3);
@@ -29,9 +31,9 @@ int main(){
     world.addPath(ant);
   }
 
-  cout << "Done calculations.\n";
+  cout << "\tDone calculations.\n";
 
-  cout << "Here are the results: \n";
+  cout << "\tHere are the results: \n";
 
   world.printPaths(10);
 

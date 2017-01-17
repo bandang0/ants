@@ -2,23 +2,28 @@
 
 #variables
 CC=g++
-TFLAGS= -g	#gdb flag for testing
+TFLAGS= -g #flags for gdb
 EXEC=main
 
-test: World.o Ant.o test.cpp
-	$(CC) $(TFLAGS) test.cpp World.o Ant.o -o test.out
-
-all: World.o Ant.o main.c
-	$(CC) main.c World.o Ant.o -o ants
-
+#test compiling
+test: World.o Ant.o global.o test.cpp
+	$(CC) $(TFLAGS) test.cpp World.o Ant.o global.o -o test.out
 
 
 World.o: World.cpp
-	$(CC) -c World.cpp -o World.o
+	$(CC) -c $(TFLAGS) World.cpp -o World.o
 
 Ant.o: Ant.cpp
-	$(CC) -c Ant.cpp -o Ant.o
+	$(CC) -c $(TFLAGS) Ant.cpp -o Ant.o
 
+global.o: global.cpp
+	$(CC)-c $(TFLAGS) global.cpp -o global.o
+
+#final compiling
+all: World.cpp Ant.cpp main.cpp
+	$(CC) main.cpp World.cpp Ant.cpp global.cpp -o ants
+
+#cleaning
 clean:
 	rm -rf *.o
 

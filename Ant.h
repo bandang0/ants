@@ -18,7 +18,7 @@ class Ant
   std::vector<int> _pathX;
   std::vector<int> _pathY;
   int _pathLength;
-  double _depot;//how mush phero is deposited at each move
+  const double _depot;//how mush phero is deposited at each move
 
 public:
   //destructor constructor
@@ -27,18 +27,18 @@ public:
   Ant(World & , double);//constructor at world's start position and depot
 
   //print, equal
-  void print();//print info on ant
+  void print() const;//print info on ant
 
   //getset
-  int getX();
-  int getY();
-  std::vector<int> getPathX();
-  std::vector<int> getPathY();
+  int getX() const ;
+  int getY() const ;
+  std::vector<int> getPathX() const;
+  std::vector<int> getPathY() const;
 
   //methods
-  int chooseLab(World &);//randomly choose label of next cell
+  int chooseLab(World &) const;//randomly choose label of next cell
   void move(World &);//go to next step, update path and world phero
-  bool isAtEnd(World &); //tells if ant is at end position of world
+  bool isAtEnd(World &) const; //tells if ant is at end position of world
 
 };
 

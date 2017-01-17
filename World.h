@@ -34,28 +34,27 @@ public:
   World(std::string mapName) ; //constructor that reads read info in a map file
 
   //print, equals
-  void print(); //print pheromone state
-  void print(Ant & ); //print ants on grid
-  void printPaths();
-  void printPaths(int);
+  void print() const; //print pheromone state
+  void print(Ant & ) const; //print ants on grid
+  void printPaths() const;
+  void printPaths(int) const;
   //getset
-  int getSizeX();
-  int getSizeY();
-  double getPhero(int);
-  int getIsnp(int);
-  int getStartX();
-  int getStartY();
-  int getEndX();
-  int getEndY();
+  int getSizeX() const;
+  int getSizeY() const;
+  double getPhero(int) const;
+  int getIsnp(int) const;
+  int getStartX() const;
+  int getStartY() const;
+  int getEndX() const;
+  int getEndY() const;
   void setPhero(int, double);
 
   //methods
-  int getPos(int, int);//get linear position in [0, sx*sy-1] with x,y coords
+  int getPos(int, int) const;//get  position in [0, sx*sy-1] with x,y coords
   void windBlow();//uniformly lose pheromone
-  bool isCorrect();//verify that calculations and solutions are possible
+  bool isCorrect() const;//verify that calculations and solutions are possible
   void addPath(Ant &);
-  void sorry();
-  bool hasInARow(int);
+  bool hasInARow(int) const;
 
 };
 
