@@ -8,6 +8,5 @@ Each branch here has written the program in a different language, so you have:
 
 	2. gab : Python
 
-	3. csharp : C#
 
 Feel free to stroll around!
