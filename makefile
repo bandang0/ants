@@ -1,31 +1,44 @@
 # makefile for the ants project
 
-#variables
+# variables
+RTDIR=$(shell pwd)
+SRCDIR=ants/
+TESTDIR=test/
+EXEC=ants
+
+# g++ flags for gdb and include dir
 CC=g++
-TFLAGS= -g #flags for gdb
-EXEC=main
-
-#test compiling
-test: World.o Ant.o global.o test.cpp
-	$(CC) $(TFLAGS) test.cpp World.o Ant.o global.o -o test.out
+TFLAGS=-g
+INCL=$(RTDIR)
 
 
-World.o: World.cpp
-	$(CC) -c $(TFLAGS) World.cpp -o World.o
 
-Ant.o: Ant.cpp
-	$(CC) -c $(TFLAGS) Ant.cpp -o Ant.o
+# object files
+World.o: $(SRCDIR)World.cpp
+	$(CC) -c $(TFLAGS) -I $(INCL) $(SRCDIR)World.cpp -o World.o
 
-global.o: global.cpp
-	$(CC)-c $(TFLAGS) global.cpp -o global.o
+Ant.o: $(SRCDIR)Ant.cpp
+	$(CC) -c $(TFLAGS) -I $(INCL) $(SRCDIR)Ant.cpp -o Ant.o
 
-#final compiling
-all: World.cpp Ant.cpp main.cpp
-	$(CC) main.cpp World.cpp Ant.cpp global.cpp -o ants
+global.o: $(SRCDIR)global.cpp
+	$(CC) -c $(TFLAGS) -I $(INCL) $(SRCDIR)global.cpp -o global.o
 
-#cleaning
+
+# test compiling
+test: World.o Ant.o global.o $(TESTDIR)test.cpp
+	$(CC) $(TFLAGS) -I $(INCL) $(TESTDIR)test.cpp World.o Ant.o global.o \
+	-o test.out
+
+# build
+all: $(SRCDIR)World.cpp $(SRCDIR)Ant.cpp $(SRCDIR)ants.cpp
+	$(CC) -I $(INCL) \
+	$(SRCDIR)ants.cpp $(SRCDIR)World.cpp $(SRCDIR)Ant.cpp $(SRCDIR)global.cpp \
+	-o $(EXEC).out
+
+# cleaning
 clean:
 	rm -rf *.o
+	rm -rf *.out
 
 remove:
-	rm -rf *.out ants
+	rm -rf *.out $(EXEC).out

@@ -2,8 +2,9 @@
 #include <string>
 #include <vector>
 #include <unistd.h>
-#include "Ant.h"
-#include "World.h"
+#include "ants/Ant.h"
+#include "ants/World.h"
+#include "ants/global.h"
 
 using namespace std;
 
@@ -26,7 +27,7 @@ int main(){
   World world(9, 9, isnp, 2, 2, 7, 7, r);
 
   if (!world.isCorrect()){
-     world.sorry();
+     sorry();
      return 1;
    }
 
